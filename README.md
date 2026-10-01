@@ -20,6 +20,8 @@ A self-contained WordPress employee time clock built for a shared kiosk/tablet w
 - WordPress user-profile controls for employees and time-record access
 - Hidden/system users excluded from normal kiosk and payroll reporting
 - Kiosk self-refresh to recover from stale overnight browser sessions
+- Friendly logged-out kiosk screen with a login button that returns to the time clock
+- Separate employee-only message for logged-in users without time-clock access
 - Built-in WordPress admin instructions
 
 ## Requirements
@@ -47,7 +49,7 @@ The plugin also adds a **Time Clock** section to the WordPress admin menu with i
 
 ## Version
 
-Current public release: **1.1.10**
+Current public release: **1.1.11**
 
 ## Notes
 
