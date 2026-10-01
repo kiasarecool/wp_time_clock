@@ -285,8 +285,17 @@ class PF_Time_Clock {
         return $q->get_results();
     }
     public function clock_shortcode(){
-        if(!$this->current_can_clock()) return '<div class="pf-tc-denied">You do not have access to the employee time clock.</div>';
-        $this->enqueue(); $emps=$this->employees(); ob_start(); ?>
+        $this->enqueue();
+        if(!is_user_logged_in()){
+            $redirect=get_permalink();
+            if(!$redirect) $redirect=home_url('/');
+            $login=wp_login_url($redirect);
+            return '<div class="pf-tc pf-tc-access"><div class="pf-tc-access-card"><h2>Employee Time Clock</h2><p class="pf-tc-access-lead">You’re not currently logged in.</p><p>Log in to access the employee time clock.</p><a class="pf-btn pf-login-btn" href="'.esc_url($login).'">Log In</a></div></div>';
+        }
+        if(!$this->current_can_clock()){
+            return '<div class="pf-tc pf-tc-access"><div class="pf-tc-access-card"><h2>Employee Time Clock</h2><p class="pf-tc-access-lead">This page is for employees only.</p><p>If you believe you should have access, contact a manager.</p></div></div>';
+        }
+        $emps=$this->employees(); ob_start(); ?>
         <div class="pf-tc pf-tc-kiosk"><h2>Employee Time Clock</h2>
           <label class="pf-label">Employee</label><select id="pf-tc-employee"><option value="">Select your name…</option><?php foreach($emps as $e):?><option value="<?php echo esc_attr($e->ID);?>"><?php echo esc_html($e->display_name);?></option><?php endforeach;?></select>
           <div id="pf-tc-state" class="pf-card pf-hidden"></div><div id="pf-tc-actions" class="pf-hidden"></div><div id="pf-tc-message"></div>
